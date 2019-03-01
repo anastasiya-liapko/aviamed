@@ -1,19 +1,19 @@
 <template>
-    <div class="home">
+    <div class="news">
         <div class="container">
-            <p>Hello world</p>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'home'
+
     }
 </script>
 
 <style lang="sass">
-    .home
+    .news
         .container
-            height: 1200px
+            height: 200px
+            background-color: red
 </style>

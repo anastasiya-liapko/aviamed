@@ -1,19 +1,19 @@
 <template>
-    <div class="home">
+    <div class="license">
         <div class="container">
-            <p>Hello world</p>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'home'
+
     }
 </script>
 
 <style lang="sass">
-    .home
+    .license
         .container
-            height: 1200px
+            height: 200px
+            background-color: yellow
 </style>
