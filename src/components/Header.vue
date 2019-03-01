@@ -43,6 +43,12 @@
                             </transition>
 
                         </li>
+
+                        <router-link 
+                            :to="'/запись-на-прием'" 
+                            tag="a">
+                            Запись на прием
+                        </router-link>
                     </ul>
                 </transition>
 

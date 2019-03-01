@@ -42,6 +42,11 @@ export default new Router({
       component: () => import('./views/about/Contacts.vue')
     },
     {
+      path: '/запись-на-прием',
+      name: 'appointment',
+      component: () => import('./views/Appointment.vue')
+    },
+    {
       path: '*',
       redirect: '/'
     }
