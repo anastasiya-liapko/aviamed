@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import nav from '@/store/modules/nav';
-import showNav from '@/store/modules/showNav';
+import header from '@/store/modules/header';
+import appointment from '@/store/modules/appointment';
 
 Vue.use(Vuex)
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
 
   },
   modules: {
-    nav,
-    showNav
+    header,
+    appointment
   }
 })

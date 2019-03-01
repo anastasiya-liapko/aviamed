@@ -28,7 +28,7 @@
     body
         height: 100%
 
-    #app 
+    #app
         height: 100%
         display: flex
         flex-direction: column
@@ -50,7 +50,6 @@
 
     .container
         border: 1px solid black
-
 
     .slide-fade-enter-active
         animation: slide-fade-in 200ms ease-out forwards

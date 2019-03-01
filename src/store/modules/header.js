@@ -1,4 +1,7 @@
+import nav from '@/data/nav.js';
+
 const state = {
+    nav: nav,
     show: false
 };
 
@@ -15,6 +18,9 @@ const actions = {
 };
 
 const getters = {
+    nav: state => {
+        return state.nav;
+    },
     showNav: state => {
         return state.show;
     }
