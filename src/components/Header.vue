@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row flex-nowrap justify-content-between align-items-center">
 
-                <app-burger></app-burger>
+                <app-burger id="js-toggleMenu"></app-burger>
 
                 <div class="header__logo">
                     <router-link 
@@ -15,6 +15,7 @@
 
                 <transition name="slide">
                     <ul 
+                        id="js-headerMenu"
                         class="header__nav nav row flex-column flex-lg-row flex-nowrap justify-content-between align-items-start align-items-lg-center flex-grow-1 d-lg-flex" 
                         v-show="showNav">
                         <li 
@@ -58,8 +59,10 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import Burger from '@/components/Burger.vue';
+    import { hideMixin } from '../mixins'
+    import { mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
+    import Burger from '@/components/Burger.vue'
 
     export default {
         computed: {
@@ -73,15 +76,26 @@
                 return element.split(' ').join('-').toLowerCase();
             }
         },
-        // methods: {
+        methods: {
+            ...mapActions({
+                'hideMenu': 'hide'
+            }),
         //     createLink(element) {
         //         return element === 'О нас' ? '' : '/' + element.split(' ').join('-').toLowerCase();
                 
         //     }
-        // },
+            hide(e) {
+                var headerMenu = document.querySelector('#js-headerMenu');
+                var toggleMenu = document.querySelector('#js-toggleMenu');
+                if (!headerMenu.contains(e.target) && !toggleMenu.contains(e.target)) {
+                    this.hideMenu();
+                }
+            }
+        },
         components: {
             'app-burger': Burger
-        }
+        },
+        mixins: [hideMixin]
     }
 </script>
 

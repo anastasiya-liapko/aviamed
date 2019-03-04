@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="app">
         <app-header></app-header>
 
         <transition name="slide-fade" mode="out-in">
@@ -32,24 +32,42 @@
         height: 100%
         display: flex
         flex-direction: column
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: 'Roboto', Arial, sans-serif;
         -webkit-font-smoothing: antialiased
         -moz-osx-font-smoothing: grayscale
-        // text-align: center
+        font-size: 1rem
+        line-height: 1rem
+        font-weight: 400px
         color: #2c3e50
+
+    .app__title
+        margin-top: 100px
+        text-align: center
 
     .footer
         margin-top: auto
+
+    .container
+        border: 1px solid black
+
+    .row
+        margin: 0
 
     ul
         padding-left: 0
         list-style: none
 
-    .row
-        margin: 0
+    input
+        height: 40px
+        padding-left: 20px
+        padding-right: 20px
+        &:focus
+        outline: none
+        &:focus::placeholder
+            opacity: 0
 
-    .container
-        border: 1px solid black
+    .btn:focus
+        box-shadow: none !important
 
     .slide-fade-enter-active
         animation: slide-fade-in 200ms ease-out forwards
@@ -59,7 +77,7 @@
 
     @keyframes slide-fade-in
         from
-            transform: translateY(-30px)
+            transform: translateY(-100px)
             opacity: 0
         to
             transform: translateY(0)
@@ -70,7 +88,7 @@
             transform: translateY(0)
             opacity: 1
         to
-            transform: translateY(-30px)
+            transform: translateY(-100px)
             opacity: 0
 
 </style>

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import header from '@/store/modules/header';
-import appointment from '@/store/modules/appointment';
+import header from '@/store/modules/header'
 
 Vue.use(Vuex)
 
@@ -16,7 +15,6 @@ export default new Vuex.Store({
 
   },
   modules: {
-    header,
-    appointment
+    header
   }
 })

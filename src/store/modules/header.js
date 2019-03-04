@@ -1,19 +1,25 @@
-import nav from '@/data/nav.js';
+import headerNav from '@/data/headerNav.js';
 
 const state = {
-    nav: nav,
+    nav: headerNav,
     show: false
 };
 
 const mutations = {
     'SWITCH_SHOW_NAV' () {
         state.show = !state.show;
+    },
+    'HIDE' () {
+        state.show = false;
     }
 };
 
 const actions = {
     switchShowNav: ({ commit }) => {
         commit('SWITCH_SHOW_NAV');
+    },
+    hide: ({ commit }) => {
+        commit('HIDE');
     }
 };
 
