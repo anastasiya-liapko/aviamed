@@ -20,7 +20,7 @@
             <span class="select__caret"></span>
         </li>
 
-        <transition name="slide" appear>
+        <transition name="rotate-hor" appear>
             <ul 
                 class="select__menu" 
                 v-show="showMenu" 

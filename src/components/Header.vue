@@ -13,7 +13,7 @@
                     </router-link>
                 </div>
 
-                <transition name="slide">
+                <transition name="bounce-left" appear>
                     <ul 
                         id="js-headerMenu"
                         class="header__nav nav row flex-column flex-lg-row flex-nowrap justify-content-between align-items-start align-items-lg-center flex-grow-1 d-lg-flex" 
@@ -136,24 +136,6 @@
             text-align: left
 
 
-    .slide-enter
-    .slide-enter-active
-        animation: slide-in 0.6s ease-in-out
-    .slide-leave
-    .slide-leave-active
-        animation: slide-out 0.5s ease-in-out
-    @keyframes slide-in
-        from
-            max-height: 0
-        to
-            max-height: 400px
-    @keyframes slide-out
-        from
-            max-height: 400px
-        to
-            max-height: 0
-
-
     @media(max-width: 991px)
         .header
             .container
@@ -172,6 +154,7 @@
         .dropdown 
             position: relative
 
+    
 </style>
 
 

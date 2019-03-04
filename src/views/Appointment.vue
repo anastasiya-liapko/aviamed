@@ -52,11 +52,11 @@
 
                 <div class="appointment__date row flex-column flex-md-row flex-nowrap" style="border: 1px solid red">
                     <div class="row col-12 col-md-6 flex-column justify-content-between mb-3 mb-md-0 pl-0" style="border: 1px solid green">
-                        <app-calendar 
-                            class="date__calendar row justify-content-center" 
-                            v-on:pick="updateDate"
+                        <app-date 
+                            class="date-picker row justify-content-center" 
+                            v-on:pickDate="updateDate"
                             style="border: 1px solid red">
-                        </app-calendar>
+                        </app-date>
 
                         <div
                             class="input date w-100" 
@@ -74,13 +74,25 @@
                     </div>
                     
                     <div class="time row col-12 col-md-6 flex-column justify-content-between pr-0" style="border: 1px solid green">
-                        <div class="time__table" style="border: 1px solid red"></div>
-                        <input 
-                            id="appointmentTime"
-                            class="time__input"
-                            name="time"
-                            placeholder="11:00"
-                            v-model="appointment.time">
+                        <app-time 
+                            class="time-picker"
+                            v-on:pickTime="updateTime" 
+                            style="border: 1px solid red">
+                        </app-time>
+
+                        <div
+                            class="input date w-100" 
+                            :class="{invalid: $v.appointment.time.$error}" 
+                            style="border: 1px solid red">
+                            <input 
+                                id="appointmentTime"
+                                class="time__input w-100"
+                                name="time"
+                                :placeholder="appointment.time"
+                                @blur="$v.appointment.time.$touch()"
+                                v-model="appointment.time">
+                            <p v-if="!$v.appointment.time.required && $v.appointment.time.$dirty">Это обязательное поле</p>
+                        </div>
                     </div>
                 </div>
 
@@ -148,7 +160,8 @@
 </template>
 
 <script>
-    import DatePicker from '../components/Calendar.vue'
+    import DatePicker from '../components/DatePicker.vue'
+    import TimePicker from '../components/TimePicker.vue'
     import Select from '../components/Select.vue'
     import { mapGetters } from 'vuex'
     import { mapActions } from 'vuex'
@@ -162,7 +175,7 @@
                     service: '',
                     doctor: '',
                     date: new Date().toLocaleString().split(',').shift(),
-                    time: '',
+                    time: new Date().getHours() + 1 + ':00',
                     name: '',
                     phone: '',
                     email: ''
@@ -230,8 +243,10 @@
                 this.touchDoctor = true;
             },
             updateDate(value) {
-                console.log(value);
                 this.appointment.date = value;
+            },
+            updateTime(value) {
+                this.appointment.time = value;
             },
             touchServiceMethod() {
                 this.v.appointment.service.$touch();
@@ -254,7 +269,8 @@
             }
         },
         components: {
-            'app-calendar': DatePicker,
+            'app-date': DatePicker,
+            'app-time': TimePicker,
             'app-select': Select
         }
     }
@@ -287,9 +303,9 @@
     .date-picker ol li.day.selected[data-v-7c712536]:after
         background: transparent
 
-    .time__table
-        width: 100%
-        height: 200px
+    // .time__table
+    //     width: 100%
+    //     height: 200px
 
     .phone,
     .email

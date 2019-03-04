@@ -25,7 +25,6 @@
             <td v-for="(v, j) in 7"
               :key="j"
               :class="date[i * 7 + j] && date[i * 7 + j].status"
-              
               @click="pickDate(i * 7 + j)">{{date[i * 7 + j] && date[i * 7 + j].text}}</td>
           </tr>
         </tbody>
@@ -131,7 +130,7 @@ export default {
       this.show = false
       this.now = new Date(this.date[index].time)
       this.pickedValue = this.stringify()
-      this.$emit('pick', this.pickedValue)
+      this.$emit('pickDate', this.pickedValue)
     },
     parse (str) {
       var time = new Date(str)
@@ -178,6 +177,7 @@ export default {
 .datetime-picker {
   position: relative;
   display: inline-block;
+  margin-bottom: 25px;
   font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei";
   -webkit-font-smoothing: antialiased;
   color: #333;
@@ -202,7 +202,7 @@ export default {
   z-index: 1000;*/
   /*width: 238px;*/
   width: 100%;
-  height: 300px;
+  /*height: 300px;*/
   margin-top: 2px;
   background-color: #fff;
   box-shadow: 0 0 6px #ccc;
