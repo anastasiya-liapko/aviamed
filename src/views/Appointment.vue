@@ -9,12 +9,12 @@
                     <app-select
                         id="js-appointmentSpecialization"
                         class="select mb-2"
-
                         :placeholder="'Специализация'"
                         :options="specializations"
                         :selected="specialization"
                         v-on:updateOption="selectSpecialization">
                     </app-select>
+
 
                     <div
                         class="input services mb-2 mb-md-0" 
@@ -26,6 +26,7 @@
                             :placeholder="'Услуга'"
                             :options="services"
                             :selected="service"
+                            v-model="service"
                             v-on:updateOption="selectService">
                         </app-select>
                         <p v-if="!$v.appointment.service.required && $v.appointment.service.$invalid && touchService">Выберите услугу или специалиста</p>
@@ -160,121 +161,132 @@
 </template>
 
 <script>
-    import DatePicker from '../components/DatePicker.vue'
-    import TimePicker from '../components/TimePicker.vue'
-    import Select from '../components/Select.vue'
-    import { mapGetters } from 'vuex'
-    import { mapActions } from 'vuex'
-    import { required, email, requiredUnless } from 'vuelidate/lib/validators';
+import DatePicker from '../components/DatePicker.vue'
+import TimePicker from '../components/TimePicker.vue'
+import Select from '../components/Select.vue'
+import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
+import { required, email, requiredUnless } from 'vuelidate/lib/validators';
 
-    export default {
-        data() {
-            return {
-                appointment: {
-                    specialization: '',
-                    service: '',
-                    doctor: '',
-                    date: new Date().toLocaleString().split(',').shift(),
-                    time: new Date().getHours() + 1 + ':00',
-                    name: '',
-                    phone: '',
-                    email: ''
-                },
-                specializations: [ 
-                    {name: 'Диетология'},
-                    {name: 'Ксенонотерапия'}, 
-                    {name: 'Маммология'}
-                ],
-                specialization: { name: 'Специализация' },
-                services: [ 
-                    {name: 'Осмотр'}, 
-                    {name: 'Осмотр'} 
-                ],
-                service: { name: 'Услуга' },
-                doctors: [ 
-                    {name: 'Фокина Светлана Николаевна'}, 
-                    {name: 'Шабунина Ирина Юрьевна'},
-                    {name: 'Ухабина Ирина Юрьевна'}
-                ],
-                doctor: { name: 'Врач' },
-                touchService: false,
-                touchDoctor: false
-            }
-        },
-        validations: {
+export default {
+    data() {
+        return {
             appointment: {
-                service: {
-                    required: requiredUnless('doctor')
-                },
-                doctor: {
-                    required: requiredUnless('service')
-                },
-                date: {
-                    required
-                },
-                time: {
-                    required
-                },
-                name: {
-                    required
-                },
-                phone: {
-                    required: requiredUnless('email')
-                },
-                email: {
-                    required: requiredUnless('phone'),
-                    email
-                }
-            }
-        },
-        methods: {
-            selectSpecialization(value) {
-                this.specialization = value;
-                this.appointment.specialization = value.name;
+                specialization: '',
+                service: '',
+                doctor: '',
+                date: new Date().toLocaleString().split(',').shift(),
+                time: new Date().getHours() + 1 + ':00',
+                name: '',
+                phone: '',
+                email: ''
             },
-            selectService(value) {
-                this.service = value;
-                this.appointment.service = value.name;
-                this.touchService = true;
-            },
-            selectDoctor(value) {
-                this.doctor = value;
-                this.appointment.doctor = value.name;
-                this.touchDoctor = true;
-            },
-            updateDate(value) {
-                this.appointment.date = value;
-            },
-            updateTime(value) {
-                this.appointment.time = value;
-            },
-            touchServiceMethod() {
-                this.v.appointment.service.$touch();
-                this.appointment.touchService = true;
-            },
-           
-            submit() {
-                this.$http.post('/upload.php', this.appointment)
-                    .then(
-                        response => 
-                        {
-                            console.log('post-ok');
-                            console.log(response);
-                        }, 
-                        error => 
-                        {
-                            console.log('post-error');
-                            console.log(error);
-                        });
-            }
-        },
-        components: {
-            'app-date': DatePicker,
-            'app-time': TimePicker,
-            'app-select': Select
+            specializations: [ 
+                {name: 'Диетология'},
+                {name: 'Ксенонотерапия'}, 
+                {name: 'Маммология'}
+            ],
+            specialization: { name: 'Специализация' },
+            services: [ 
+                {name: 'Осмотр'}, 
+                {name: 'Осмотр'} 
+            ],
+            service: { name: 'Услуга' },
+            doctors: [ 
+                {name: 'Фокина Светлана Николаевна'}, 
+                {name: 'Шабунина Ирина Юрьевна'},
+                {name: 'Ухабина Ирина Юрьевна'}
+            ],
+            doctor: { name: 'Врач' },
+            touchService: false,
+            touchDoctor: false
         }
+    },
+    validations: {
+        appointment: {
+            service: {
+                required: requiredUnless('doctor')
+            },
+            doctor: {
+                required: requiredUnless('service')
+            },
+            date: {
+                required
+            },
+            time: {
+                required
+            },
+            name: {
+                required
+            },
+            phone: {
+                required: requiredUnless('email')
+            },
+            email: {
+                required: requiredUnless('phone'),
+                email
+            }
+        }
+    },
+    methods: {
+        selectSpecialization(value) {
+            this.specialization = value;
+            this.appointment.specialization = value.name;
+        },
+        selectService(value) {
+            this.service = value;
+            this.appointment.service = value.name;
+            this.touchService = true;
+        },
+        selectDoctor(value) {
+            this.doctor = value;
+            this.appointment.doctor = value.name;
+            this.touchDoctor = true;
+        },
+        updateDate(value) {
+            this.appointment.date = value;
+        },
+        updateTime(value) {
+            this.appointment.time = value;
+        },
+        touchServiceMethod() {
+            this.v.appointment.service.$touch();
+            this.appointment.touchService = true;
+        },
+        resetForm() {
+            var self = this;
+            Object.keys(this.appointment).forEach(function(key,index) {
+                self.appointment[key] = '';
+
+            });
+            this.$v.$reset();
+            this.touchService = false;
+            this.touchDoctor = false;
+
+        },
+        submit(event) {
+            this.$http.post('/upload.php', this.appointment)
+                .then(
+                    response => 
+                    {
+                        console.log('post-ok');
+                        console.log(response);
+                        this.resetForm();
+                    }, 
+                    error => 
+                    {
+                        console.log('post-error');
+                        console.log(error);
+                        this.resetForm();
+                    });
+        }
+    },
+    components: {
+        'app-date': DatePicker,
+        'app-time': TimePicker,
+        'app-select': Select
     }
- 
+}
 </script>
 
 <style lang="sass">
@@ -295,17 +307,12 @@
         .doctors
             width: 48%
 
-
     .date__input,
     .time__input
         pointer-events: none
 
     .date-picker ol li.day.selected[data-v-7c712536]:after
         background: transparent
-
-    // .time__table
-    //     width: 100%
-    //     height: 200px
 
     .phone,
     .email
@@ -327,7 +334,6 @@
         p
             margin-bottom: 0
 
-    
     @media(max-width: 767px)
         .appointment__date>div
             padding-left: 0

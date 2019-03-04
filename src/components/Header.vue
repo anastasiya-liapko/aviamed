@@ -13,7 +13,7 @@
                     </router-link>
                 </div>
 
-                <transition name="bounce-left" appear>
+                <transition name="flip" appear>
                     <ul 
                         id="js-headerMenu"
                         class="header__nav nav row flex-column flex-lg-row flex-nowrap justify-content-between align-items-start align-items-lg-center flex-grow-1 d-lg-flex" 
@@ -23,7 +23,8 @@
                             v-for="(navItem, i) in nav">
                             <router-link 
                                 :to="'/' + navItem.name | link" 
-                                tag="a">
+                                tag="a"
+                                @click.native="switchShow">
                                 {{ navItem.name }}
                             </router-link>
 
@@ -36,7 +37,8 @@
                                         v-for="dropdownItem in navItem.children">
                                         <router-link 
                                             :to="'/' + dropdownItem | link" 
-                                            tag="a">
+                                            tag="a"
+                                            @click.native="switchShow">
                                             {{ dropdownItem }}
                                         </router-link>
                                     </li>
@@ -47,7 +49,8 @@
 
                         <router-link 
                             :to="'/запись-на-прием'" 
-                            tag="a">
+                            tag="a"
+                            @click.native="switchShow">
                             Запись на прием
                         </router-link>
                     </ul>
@@ -78,12 +81,16 @@
         },
         methods: {
             ...mapActions({
-                'hideMenu': 'hide'
+                'hideMenu': 'hide',
+                'switchShowNav': 'switchShowNav'
             }),
         //     createLink(element) {
         //         return element === 'О нас' ? '' : '/' + element.split(' ').join('-').toLowerCase();
                 
         //     }
+            switchShow() {
+                this.switchShowNav();
+            },
             hide(e) {
                 var headerMenu = document.querySelector('#js-headerMenu');
                 var toggleMenu = document.querySelector('#js-toggleMenu');

@@ -66,7 +66,8 @@
             placeholder: [String]
         },
         mounted: function() {
-            this.selectedOption = this.selected;
+            console.log(this.placeholder);
+            this.selectedOption.name = this.placeholder;
             if (this.placeholder) {
                 this.placeholderText = this.placeholder;
             }
