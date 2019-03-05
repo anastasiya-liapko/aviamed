@@ -5,18 +5,18 @@
         <li 
             @click="toggleMenu()" 
             class="select__toggle" 
-            :class="{opened: showMenu}" 
-            v-show="selectedOption.name !== undefined">
-            {{ selectedOption.name }}
+            
+            v-show="selectedOption !== undefined && selectedOption !== ''">
+            {{ computedOption }}
             <span class="select__caret"></span>
         </li>
 
         <li 
             @click="toggleMenu()" 
             class="select__toggle" 
-            :class="{opened: showMenu}" 
-            v-show="selectedOption.name === undefined">
-            {{placeholderText}}
+            
+            v-show="selectedOption === undefined || selectedOption === ''">
+            {{ placeholder }}
             <span class="select__caret"></span>
         </li>
 
@@ -28,16 +28,15 @@
                 <li>
                     <a 
                         href="javascript:void(0)" 
-                        @click="updateOption('')" 
-                        :class="{isSelected: selectedOption.name === ''}">
+                        @click="updateOption(name, '')">
                     </a>
                 </li>
                 <li v-for="option in options">
                     <a 
                         href="javascript:void(0)" 
-                        @click="updateOption(option)" 
-                        :class="{isSelected: option.name === selectedOption.name}">
-                        {{ option.name }}
+                        @click="updateOption(name, option)" 
+                        :class="{isSelected: option === selectedOption}">
+                        {{ option }}
                     </a>
                 </li>
             </ul>
@@ -46,49 +45,54 @@
 </template>
 
 <script>
-    import { hideMixin } from '../mixins'
+    import { hideMixin } from '@/mixins'
+    import { mapActions } from 'vuex'
 
     export default {
         data() {
             return {
-                selectedOption: {
-                    name: '',
-                },
                 showMenu: false,
-                placeholderText: 'Please select an item'
+                selectorName: '',
+                selectedOption: '',
             }
         },
         props: {
-            options: {
-                type: [Array, Object]
+            name: [String],
+            options: { 
+                type: [Array, Object] 
             },
-            selected: {},
+            selected: [String],
             placeholder: [String]
         },
-        mounted: function() {
-            console.log(this.placeholder);
-            this.selectedOption.name = this.placeholder;
-            if (this.placeholder) {
-                this.placeholderText = this.placeholder;
+        computed: {
+            computedOption() {
+                return this.selectedOption = this.selected;
             }
         },
         methods: {
-            updateOption: function(option) {
+            updateOption: function(name, option) {
+                this.selectorName = name;
                 this.selectedOption = option;
                 this.showMenu = false;
-                this.$emit('updateOption', this.selectedOption);
+                this.$emit('updateOption', [this.selectorName, this.selectedOption]);
             },
             toggleMenu: function() {
                 this.showMenu = !this.showMenu;
             },
             hide(e) {
-                var selectMenu = document.querySelector('.select__menu.opened');
+                var selectMenu = document.querySelectorAll('opened');
                 var toggleMenu = document.querySelector('.select__toggle.opened');
-                if (selectMenu !== null && toggleMenu !== null) {
-                    if (!selectMenu.contains(e.target) && !toggleMenu.contains(e.target)) {
+                console.log(selectMenu);
+                // if (selectMenu !== null && toggleMenu !== null) {
+                //     if (!selectMenu.contains(e.target) && !toggleMenu.contains(e.target)) {
+                //         this.showMenu = false;
+                //     }
+                // }
+                // if (selectMenu !== null) {
+                    if (!selectMenu.contains(e.target)) {
                         this.showMenu = false;
                     }
-                }
+                // }
             },
         },
         mixins: [hideMixin]

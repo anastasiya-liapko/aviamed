@@ -1,4 +1,4 @@
-import headerNav from '@/data/headerNav.js';
+import headerNav from '@/data/headerNav'
 
 const state = {
     nav: headerNav,

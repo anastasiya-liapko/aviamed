@@ -1,15 +1,18 @@
 <template>
     <div class="home">
         <div class="container">
-            <p>Hello world</p>
-
+            <app-slider-doctors :slides="doctors" :buttons="'doctors'"></app-slider-doctors>
+            <app-slider-partners :slides="partners" :buttons="'partners'"></app-slider-partners>
             <app-map :coordinates="map.coordinates" :icon="map.icon"></app-map>
         </div>
     </div>
 </template>
 
 <script>
-    import Map from '../components/Map.vue'
+    import SliderDoctors from '@/components/slider/SliderDoctors.vue'
+    import SliderPartners from '@/components/slider/SliderPartners.vue'
+    import Map from '@/components/Map.vue'
+    import { mapGetters } from 'vuex'
 
     export default {
         name: 'home',
@@ -21,14 +24,20 @@
                 }
             }
         },
+        computed: {
+            ...mapGetters([
+                'doctors',
+                'partners'
+            ])
+        },
         components: {
+            'app-slider-doctors': SliderDoctors,
+            'app-slider-partners': SliderPartners,
             'app-map': Map
         }
     }
 </script>
 
 <style lang="sass">
-    .home
-        .container
-            height: 1200px
+
 </style>

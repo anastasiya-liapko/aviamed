@@ -32,4 +32,8 @@
         height: 400px
         margin: 0 auto
         border: 1px solid red
+
+    @media(max-width: 991px)
+        #map
+            width: 100%
 </style>

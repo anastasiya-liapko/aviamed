@@ -1,19 +1,19 @@
 <template>
     <div class="header">
         <div class="container">
-            <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="row flex-nowrap justify-content-between align-items-stretch">
 
-                <app-burger id="js-toggleMenu"></app-burger>
+                <app-burger id="js-toggleMenu" style="border: 1px solid red"></app-burger>
 
-                <div class="header__logo">
-                    <router-link 
-                        to="/" 
-                        tag="a">
-                        Logo
-                    </router-link>
-                </div>
-
-                <transition name="flip" appear>
+                <router-link
+                    class="header__logo"
+                    to="/" 
+                    tag="a"
+                    style="border: 1px solid red">
+                    <img src="" alt="logo">
+                </router-link>
+                
+                <transition name="rotate-hor">
                     <ul 
                         id="js-headerMenu"
                         class="header__nav nav row flex-column flex-lg-row flex-nowrap justify-content-between align-items-start align-items-lg-center flex-grow-1 d-lg-flex" 
@@ -24,7 +24,7 @@
                             <router-link 
                                 :to="'/' + navItem.name | link" 
                                 tag="a"
-                                @click.native="switchShow">
+                                @click.native="setShowFalse">
                                 {{ navItem.name }}
                             </router-link>
 
@@ -38,7 +38,7 @@
                                         <router-link 
                                             :to="'/' + dropdownItem | link" 
                                             tag="a"
-                                            @click.native="switchShow">
+                                            @click.native="setShowFalse">
                                             {{ dropdownItem }}
                                         </router-link>
                                     </li>
@@ -50,7 +50,7 @@
                         <router-link 
                             :to="'/запись-на-прием'" 
                             tag="a"
-                            @click.native="switchShow">
+                            @click.native="setShowFalse">
                             Запись на прием
                         </router-link>
                     </ul>
@@ -91,6 +91,9 @@
             switchShow() {
                 this.switchShowNav();
             },
+            setShowFalse() {
+                this.hideMenu();
+            },
             hide(e) {
                 var headerMenu = document.querySelector('#js-headerMenu');
                 var toggleMenu = document.querySelector('#js-toggleMenu');
@@ -118,6 +121,7 @@
 
     .header__logo
         width: 150px
+        // background-color: lightblue
 
     .nav__item
         position: relative
@@ -147,6 +151,13 @@
         .header
             .container
                 padding-left: 0
+                padding-right: 0
+
+        .header__logo
+            padding-right: 15px
+        //     z-index: 10
+        //     width: 100%
+        //     height: 60px
                 
         .nav
             position: absolute

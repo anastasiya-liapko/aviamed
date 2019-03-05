@@ -1,7 +1,11 @@
 <template>
     <div class="hamburger-wrapper">
   
-        <button class="hamburger hamburger--spin btn" :class="{'is-active': showNav}" type="button" @click="switchShow">
+        <button 
+            class="hamburger hamburger--spin btn" 
+            :class="{'is-active': showNav}" 
+            type="button" 
+            @click="switchShow">
             <span class="hamburger-box">
                 <span class="hamburger-inner"></span>
             </span>

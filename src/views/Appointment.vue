@@ -2,19 +2,19 @@
     <div class="appointment">
         <div class="container">
             <form class="appointment__form row flex-column">
-                <h1 class="app__title appointment__title_main" style="border: 1px solid red">Услуги клиники</h1>
+                <h1 class="page__title appointment__title_main" style="border: 1px solid red">Услуги клиники</h1>
 
                 <h2 class="appointment__title" style="border: 1px solid red">Выберите услугу или специалиста...</h2>
                 <div class="appointment__services row justify-content-between" style="border: 1px solid red">
                     <app-select
                         id="js-appointmentSpecialization"
                         class="select mb-2"
+                        :name="'specialization'"
                         :placeholder="'Специализация'"
                         :options="specializations"
-                        :selected="specialization"
-                        v-on:updateOption="selectSpecialization">
+                        :selected="appointment.specialization"
+                        v-on:updateOption="select">
                     </app-select>
-
 
                     <div
                         class="input services mb-2 mb-md-0" 
@@ -23,11 +23,11 @@
                         <app-select
                             id="js-appointmentService"
                             class="select"
+                            :name="'service'"
                             :placeholder="'Услуга'"
                             :options="services"
-                            :selected="service"
-                            v-model="service"
-                            v-on:updateOption="selectService">
+                            :selected="appointment.service"
+                            v-on:updateOption="select">
                         </app-select>
                         <p v-if="!$v.appointment.service.required && $v.appointment.service.$invalid && touchService">Выберите услугу или специалиста</p>
                     </div>
@@ -39,11 +39,11 @@
                         <app-select
                             id="js-appointmentDoctor"
                             class="select"
+                            :name="'doctor'"
                             :placeholder="'Врач'"
                             :options="doctors"
-                            :selected="doctor"
-                            @blur="$v.appointment.doctor.$touch()"
-                            v-on:updateOption="selectDoctor">
+                            :selected="appointment.doctor"
+                            v-on:updateOption="select">
                         </app-select>
                         <p v-if="!$v.appointment.doctor.required && $v.appointment.doctor.$invalid && touchDoctor">Выберите услугу или специалиста</p>
                     </div>
@@ -154,6 +154,8 @@
                 </button>
 
                 <p>{{ appointment }}</p>
+                <br>
+                <p>appointment.doctor: {{ appointment.doctor }}</p>
 
             </form>
         </div>
@@ -161,9 +163,9 @@
 </template>
 
 <script>
-import DatePicker from '../components/DatePicker.vue'
-import TimePicker from '../components/TimePicker.vue'
-import Select from '../components/Select.vue'
+import DatePicker from '@/components/form/DatePicker.vue'
+import TimePicker from '@/components/form/TimePicker.vue'
+import Select from '@/components/form/Select.vue'
 import { mapGetters } from 'vuex'
 import { mapActions } from 'vuex'
 import { required, email, requiredUnless } from 'vuelidate/lib/validators';
@@ -181,26 +183,36 @@ export default {
                 phone: '',
                 email: ''
             },
-            specializations: [ 
-                {name: 'Диетология'},
-                {name: 'Ксенонотерапия'}, 
-                {name: 'Маммология'}
-            ],
-            specialization: { name: 'Специализация' },
-            services: [ 
-                {name: 'Осмотр'}, 
-                {name: 'Осмотр'} 
-            ],
-            service: { name: 'Услуга' },
-            doctors: [ 
-                {name: 'Фокина Светлана Николаевна'}, 
-                {name: 'Шабунина Ирина Юрьевна'},
-                {name: 'Ухабина Ирина Юрьевна'}
-            ],
-            doctor: { name: 'Врач' },
+            specializations: 
+                [ 
+                    'Диетология',
+                    'Ксенонотерапия', 
+                    'Маммология' 
+                ],
+            services: 
+                [ 
+                    'Осмотр',
+                    'Осмотр' 
+                ],
+            doctors: 
+                [ 
+                    'Фокина Светлана Николаевна',
+                    'Шабунина Ирина Юрьевна',
+                    'Ухабина Ирина Юрьевна' 
+                ],
             touchService: false,
             touchDoctor: false
         }
+    },
+    computed: {
+        // ...mapGetters({
+        //     'specializations': 'appointmentSpecializations',
+        //     'specialization': 'appointmentSpecialization',
+        //     'services': 'appintmentServices',
+        //     'service': 'appointmentselectService',
+        //     'doctors': 'selectDoctors',
+        //     'doctor': 'selectDoctor'
+        // })
     },
     validations: {
         appointment: {
@@ -229,19 +241,25 @@ export default {
         }
     },
     methods: {
-        selectSpecialization(value) {
-            this.specialization = value;
-            this.appointment.specialization = value.name;
-        },
-        selectService(value) {
-            this.service = value;
-            this.appointment.service = value.name;
-            this.touchService = true;
-        },
-        selectDoctor(value) {
-            this.doctor = value;
-            this.appointment.doctor = value.name;
-            this.touchDoctor = true;
+        // ...mapActions([
+        //     'selectSpecialization',
+        //     'selectService',
+        //     'selectDoctor'
+        // ]),
+        select(value) {
+            switch(value[0]) {
+                case 'doctor':
+                    this.appointment.doctor = value[1];
+                    this.touchDoctor = true;
+                    break;
+                case 'service':
+                    this.appointment.service = value[1];
+                    this.touchService = true;
+                    break;
+                case 'specialization':
+                    this.appointment.specialization = value[1];
+                    break;
+            }
         },
         updateDate(value) {
             this.appointment.date = value;
@@ -249,15 +267,10 @@ export default {
         updateTime(value) {
             this.appointment.time = value;
         },
-        touchServiceMethod() {
-            this.v.appointment.service.$touch();
-            this.appointment.touchService = true;
-        },
         resetForm() {
             var self = this;
             Object.keys(this.appointment).forEach(function(key,index) {
                 self.appointment[key] = '';
-
             });
             this.$v.$reset();
             this.touchService = false;

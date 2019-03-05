@@ -2,8 +2,8 @@
     <div id="app" class="app">
         <app-header></app-header>
 
-        <transition name="slide-top" mode="out-in" appear>
-            <router-view></router-view>
+        <transition name="slide-top" mode="out-in">
+            <router-view class="page"></router-view>
         </transition>
 
         <app-footer></app-footer>
@@ -40,7 +40,10 @@
         font-weight: 400px
         color: #2c3e50
 
-    .app__title
+    .page
+        flex-grow: 1
+
+    .page__title
         margin-top: 100px
         text-align: center
 
@@ -48,6 +51,7 @@
         margin-top: auto
 
     .container
+        height: 100%
         border: 1px solid black
 
     .row
@@ -65,6 +69,19 @@
         outline: none
         &:focus::placeholder
             opacity: 0
+
+    button
+        &:active
+            outline: none !important
+            box-shadow: none !important
+        &:focus
+            outline: none !important
+            box-shadow: none !important
+            border: none
+
+    img
+        width: 100%
+        height: auto
 
     .table
         margin-bottom: 0
@@ -300,10 +317,10 @@
         animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
     .slide-top-leave-active
-        // -webkit-animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
-        // animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
-        opacity: 0
-        position: absolute
+        -webkit-animation: slide-out-top 0.3s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
+        animation: slide-out-top 0.3s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
+        // opacity: 0
+        // position: absolute
 
     @-webkit-keyframes slide-in-top 
         0% 
@@ -695,5 +712,125 @@
             -webkit-transform: rotateX(0deg)
             transform: rotateX(0deg)
             opacity: 0
+
+    .rotate-tl-enter
+    .rotate-tl-enter-active
+        -webkit-animation: rotate-in-tl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+        animation: rotate-in-tl 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+    .rotate-tl-leave
+    .rotate-tl-leave-active
+        -webkit-animation: rotate-out-tl 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
+        animation: rotate-out-tl 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
+
+    @-webkit-keyframes rotate-in-tl 
+        0% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 0
+        100% 
+            -webkit-transform: rotate(0deg)
+            transform: rotate(0deg)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 1
+      
+    @keyframes rotate-in-tl 
+        0% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 0
+        100% 
+            -webkit-transform: rotate(0deg)
+            transform: rotate(0deg)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 1
+
+    @-webkit-keyframes rotate-out-tl 
+        0% 
+            -webkit-transform: rotate(0)
+            transform: rotate(0)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 1
+        100% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 0
+
+    @keyframes rotate-out-tl 
+        0% 
+            -webkit-transform: rotate(0)
+            transform: rotate(0)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 1
+        100% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            -webkit-transform-origin: top left
+            transform-origin: top left
+            opacity: 0
+
+    .rotate-center-enter
+    .rotate-center-enter-active
+        -webkit-animation: rotate-in-center 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+        animation: rotate-in-center 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+    .rotate-center-leave
+    .rotate-center-leave-active
+        -webkit-animation: rotate-out-center 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
+        animation: rotate-out-center 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both
+
+    @-webkit-keyframes rotate-in-center 
+        0% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            opacity: 0
+        100% 
+            -webkit-transform: rotate(0)
+            transform: rotate(0)
+            opacity: 1
+
+    @keyframes rotate-in-center 
+        0% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            opacity: 0
+        100% 
+            -webkit-transform: rotate(0)
+            transform: rotate(0)
+            opacity: 1
+
+    @-webkit-keyframes rotate-out-center 
+        0% 
+            -webkit-transform: rotate(0)
+            transform: rotate(0)
+            opacity: 1
+        100% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            opacity: 0
+      
+    @keyframes rotate-out-center 
+        0% 
+            -webkit-transform: rotate(0)
+            transform: rotate(0)
+            opacity: 1
+        100% 
+            -webkit-transform: rotate(-360deg)
+            transform: rotate(-360deg)
+            opacity: 0
+
+
+
+
 
 </style>

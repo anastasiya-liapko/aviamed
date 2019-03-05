@@ -11,9 +11,13 @@ import Vuelidate from 'vuelidate'
 import 'hamburgers/dist/hamburgers.css'
 // npm install animate.css
 import 'animate.css/animate.min.css'
+// npm install vue-awesome-swiper
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css'
 
 Vue.use(VueResource)
 Vue.use(Vuelidate)
+Vue.use(VueAwesomeSwiper);
 
 Vue.config.productionTip = false
 
