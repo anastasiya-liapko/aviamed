@@ -22,7 +22,7 @@
 
         <transition name="rotate-hor" appear>
             <ul 
-                class="select__menu" 
+                class="select__menu"
                 v-show="showMenu" 
                 :class="{opened: showMenu}">
                 <li>
@@ -46,7 +46,6 @@
 
 <script>
     import { hideMixin } from '@/mixins'
-    import { mapActions } from 'vuex'
 
     export default {
         data() {
@@ -80,20 +79,8 @@
                 this.showMenu = !this.showMenu;
             },
             hide(e) {
-                var selectMenu = document.querySelectorAll('opened');
-                var toggleMenu = document.querySelector('.select__toggle.opened');
-                console.log(selectMenu);
-                // if (selectMenu !== null && toggleMenu !== null) {
-                //     if (!selectMenu.contains(e.target) && !toggleMenu.contains(e.target)) {
-                //         this.showMenu = false;
-                //     }
-                // }
-                // if (selectMenu !== null) {
-                    if (!selectMenu.contains(e.target)) {
-                        this.showMenu = false;
-                    }
-                // }
-            },
+                this.showMenu = false;
+            }
         },
         mixins: [hideMixin]
     }

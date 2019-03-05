@@ -154,152 +154,127 @@
                 </button>
 
                 <p>{{ appointment }}</p>
-                <br>
-                <p>appointment.doctor: {{ appointment.doctor }}</p>
-
+                
             </form>
         </div>
     </div>
 </template>
 
 <script>
-import DatePicker from '@/components/form/DatePicker.vue'
-import TimePicker from '@/components/form/TimePicker.vue'
-import Select from '@/components/form/Select.vue'
-import { mapGetters } from 'vuex'
-import { mapActions } from 'vuex'
-import { required, email, requiredUnless } from 'vuelidate/lib/validators';
+    import DatePicker from '@/components/form/DatePicker.vue'
+    import TimePicker from '@/components/form/TimePicker.vue'
+    import Select from '@/components/form/Select.vue'
+    import { mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
+    import { required, email, requiredUnless } from 'vuelidate/lib/validators'
 
-export default {
-    data() {
-        return {
+
+    export default {
+        data() {
+            return {
+                appointment: {
+                    specialization: '',
+                    service: '',
+                    doctor: '',
+                    date: new Date().toLocaleString().split(',').shift(),
+                    time: new Date().getHours() + 1 + ':00',
+                    name: '',
+                    phone: '',
+                    email: ''
+                },
+                touchService: false,
+                touchDoctor: false
+            }
+        },
+        computed: {
+            ...mapGetters({
+                'specializations': 'appointmentSpecializations',
+                'services': 'appointmentServices',
+                'doctors': 'appointmentDoctors'
+            })
+        },
+        validations: {
             appointment: {
-                specialization: '',
-                service: '',
-                doctor: '',
-                date: new Date().toLocaleString().split(',').shift(),
-                time: new Date().getHours() + 1 + ':00',
-                name: '',
-                phone: '',
-                email: ''
-            },
-            specializations: 
-                [ 
-                    'Диетология',
-                    'Ксенонотерапия', 
-                    'Маммология' 
-                ],
-            services: 
-                [ 
-                    'Осмотр',
-                    'Осмотр' 
-                ],
-            doctors: 
-                [ 
-                    'Фокина Светлана Николаевна',
-                    'Шабунина Ирина Юрьевна',
-                    'Ухабина Ирина Юрьевна' 
-                ],
-            touchService: false,
-            touchDoctor: false
-        }
-    },
-    computed: {
-        // ...mapGetters({
-        //     'specializations': 'appointmentSpecializations',
-        //     'specialization': 'appointmentSpecialization',
-        //     'services': 'appintmentServices',
-        //     'service': 'appointmentselectService',
-        //     'doctors': 'selectDoctors',
-        //     'doctor': 'selectDoctor'
-        // })
-    },
-    validations: {
-        appointment: {
-            service: {
-                required: requiredUnless('doctor')
-            },
-            doctor: {
-                required: requiredUnless('service')
-            },
-            date: {
-                required
-            },
-            time: {
-                required
-            },
-            name: {
-                required
-            },
-            phone: {
-                required: requiredUnless('email')
-            },
-            email: {
-                required: requiredUnless('phone'),
-                email
-            }
-        }
-    },
-    methods: {
-        // ...mapActions([
-        //     'selectSpecialization',
-        //     'selectService',
-        //     'selectDoctor'
-        // ]),
-        select(value) {
-            switch(value[0]) {
-                case 'doctor':
-                    this.appointment.doctor = value[1];
-                    this.touchDoctor = true;
-                    break;
-                case 'service':
-                    this.appointment.service = value[1];
-                    this.touchService = true;
-                    break;
-                case 'specialization':
-                    this.appointment.specialization = value[1];
-                    break;
+                service: {
+                    required: requiredUnless('doctor')
+                },
+                doctor: {
+                    required: requiredUnless('service')
+                },
+                date: {
+                    required
+                },
+                time: {
+                    required
+                },
+                name: {
+                    required
+                },
+                phone: {
+                    required: requiredUnless('email')
+                },
+                email: {
+                    required: requiredUnless('phone'),
+                    email
+                }
             }
         },
-        updateDate(value) {
-            this.appointment.date = value;
+        methods: {
+            select(value) {
+                switch(value[0]) {
+                    case 'doctor':
+                        this.appointment.doctor = value[1];
+                        this.touchDoctor = true;
+                        break;
+                    case 'service':
+                        this.appointment.service = value[1];
+                        this.touchService = true;
+                        break;
+                    case 'specialization':
+                        this.appointment.specialization = value[1];
+                        break;
+                }
+            },
+            updateDate(value) {
+                this.appointment.date = value;
+            },
+            updateTime(value) {
+                this.appointment.time = value;
+            },
+            resetForm() {
+                var self = this;
+                Object.keys(this.appointment).forEach(function(key,index) {
+                    self.appointment[key] = '';
+                    self.appointment['date'] = new Date().toLocaleString().split(',').shift();
+                    self.appointment['time'] = new Date().getHours() + 1 + ':00';
+                });
+                this.$v.$reset();
+                this.touchService = false;
+                this.touchDoctor = false;
+            },
+            submit(event) {
+                this.$http.post('/upload.php', this.appointment)
+                    .then(
+                        response => 
+                        {
+                            console.log('post-ok');
+                            console.log(response);
+                            // this.resetForm();
+                        }, 
+                        error => 
+                        {
+                            console.log('post-error');
+                            console.log(error);
+                        });
+                this.resetForm();
+            }
         },
-        updateTime(value) {
-            this.appointment.time = value;
-        },
-        resetForm() {
-            var self = this;
-            Object.keys(this.appointment).forEach(function(key,index) {
-                self.appointment[key] = '';
-            });
-            this.$v.$reset();
-            this.touchService = false;
-            this.touchDoctor = false;
-
-        },
-        submit(event) {
-            this.$http.post('/upload.php', this.appointment)
-                .then(
-                    response => 
-                    {
-                        console.log('post-ok');
-                        console.log(response);
-                        this.resetForm();
-                    }, 
-                    error => 
-                    {
-                        console.log('post-error');
-                        console.log(error);
-                        this.resetForm();
-                    });
+        components: {
+            'app-date': DatePicker,
+            'app-time': TimePicker,
+            'app-select': Select
         }
-    },
-    components: {
-        'app-date': DatePicker,
-        'app-time': TimePicker,
-        'app-select': Select
     }
-}
 </script>
 
 <style lang="sass">
