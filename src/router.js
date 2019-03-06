@@ -22,6 +22,11 @@ export default new Router({
             component: () => import(/* webpackChunkName: "about" */ './views/about/News.vue')
         },
         {
+            path: '/новости/:id',
+            name: 'newsItem',
+            component: () => import('./views/about/NewsItem.vue')
+        },
+        {
             path: '/менеджмент',
             name: 'management',
             component: () => import('./views/about/Management.vue')
@@ -44,46 +49,47 @@ export default new Router({
         {
             path: '/клиники',
             name: 'clinics',
-            component: () => import('./views/Clinics.vue'),
-            children: 
-            [
-                {
-                    path: ':id', 
-                    name: 'clinic',
-                    component: () => import('./views/Clinic.vue')
-                }
-            ]
+            component: () => import('./views/Clinics.vue')
+        },
+        {
+            path: '/клиники/:id',
+            name: 'clinic',
+            component: () => import('./views/Clinic.vue')
         },
         {
             path: '/услуги-и-акции',
             name: 'services',
-            component: () => import('./views/Services.vue'),
-            children: 
-            [
-                {
-                    path: ':id', 
-                    name: 'service',
-                    component: () => import('./views/Service.vue')
-                }
-            ]
+            component: () => import('./views/Services.vue')
+        },
+        {
+            path: '/услуги-и-акции/:id',
+            name: 'service',
+            component: () => import('./views/Service.vue')
         },
         {
             path: '/врачи',
             name: 'doctors',
-            component: () => import('./views/Doctor.vue'),
-            children: 
-            [
-                {
-                    path: ':id', 
-                    name: 'doctor',
-                    component: () => import('./views/Doctors.vue')
-                }
-            ]
+            component: () => import('./views/Doctor.vue')
+        },
+        {
+            path: '/врачи/:id',
+            name: 'doctor',
+            component: () => import('./views/Doctors.vue')
         },
         {
             path: '/пациентам',
             name: 'toPatients',
             component: () => import('./views/toPatients/ToPatients.vue')
+        },
+        {
+            path: '/публикации',
+            name: 'publications',
+            component: () => import('./views/Publications.vue')
+        },
+        {
+            path: '/публикации/:id',
+            name: 'publication',
+            component: () => import('./views/Publication.vue')
         },
         {
             path: '/запись-на-прием',

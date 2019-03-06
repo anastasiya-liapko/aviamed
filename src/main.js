@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 import './registerServiceWorker'
-// npm install vue-resource
-import VueResource from 'vue-resource'
+// npm install axios
+import axios from 'axios'
 // npm install vuelidate
 import Vuelidate from 'vuelidate'
 // npm install hamburgers
@@ -12,17 +12,19 @@ import 'hamburgers/dist/hamburgers.css'
 // npm install animate.css
 import 'animate.css/animate.min.css'
 // npm install vue-awesome-swiper
-import VueAwesomeSwiper from 'vue-awesome-swiper';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+//npm install vue-photoswipe
+import VuePhotoSwipe from 'vue-photoswipe'
+// npm install v-photoswipe 
 
-Vue.use(VueResource)
 Vue.use(Vuelidate)
-Vue.use(VueAwesomeSwiper);
+Vue.use(VueAwesomeSwiper)
+Vue.use(VuePhotoSwipe)
 
 Vue.config.productionTip = false
 
-Vue.http.options.emulateJSON = true;
-Vue.http.options.emulateHTTP = true;
+axios.defaults.baseURL = '/dist'
 
 new Vue({
     router,

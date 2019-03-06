@@ -29,5 +29,4 @@
         height: 100%
         .container
             height: 100%
-            background-color: green
 </style>

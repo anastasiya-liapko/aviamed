@@ -9,6 +9,8 @@
                     class="header__logo"
                     to="/" 
                     tag="a"
+                    active-class="active"
+                    exact
                     style="border: 1px solid red">
                     <img src="" alt="logo">
                 </router-link>
@@ -24,6 +26,7 @@
                             <router-link 
                                 :to="'/' + navItem.name | link" 
                                 tag="a"
+                                active-class="active"
                                 @click.native="setShowFalse">
                                 {{ navItem.name }}
                             </router-link>
@@ -38,6 +41,7 @@
                                         <router-link 
                                             :to="'/' + dropdownItem | link" 
                                             tag="a"
+                                            active-class="active"
                                             @click.native="setShowFalse">
                                             {{ dropdownItem }}
                                         </router-link>
@@ -50,6 +54,7 @@
                         <router-link 
                             :to="'/запись-на-прием'" 
                             tag="a"
+                            active-class="active"
                             @click.native="setShowFalse">
                             Запись на прием
                         </router-link>
@@ -122,6 +127,9 @@
     .header__logo
         width: 150px
         // background-color: lightblue
+
+    .active
+        background-color: red
 
     .nav__item
         position: relative

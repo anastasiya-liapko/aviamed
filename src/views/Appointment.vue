@@ -7,7 +7,7 @@
                 <h2 class="appointment__title" style="border: 1px solid red">Выберите услугу или специалиста...</h2>
                 <div class="appointment__services row justify-content-between" style="border: 1px solid red">
                     <app-select
-                        id="js-appointmentSpecialization"
+                        :id="'js-appointmentSpecialization'"
                         class="select mb-2"
                         :name="'specialization'"
                         :placeholder="'Специализация'"
@@ -21,7 +21,7 @@
                         :class="{invalid: !$v.appointment.service.required && $v.appointment.service.$invalid && touchService}" 
                         style="border: 1px solid red">
                         <app-select
-                            id="js-appointmentService"
+                            :id="'js-appointmentService'"
                             class="select"
                             :name="'service'"
                             :placeholder="'Услуга'"
@@ -37,7 +37,7 @@
                         :class="{invalid: !$v.appointment.doctor.required && $v.appointment.doctor.$invalid && touchDoctor}" 
                         style="border: 1px solid red">
                         <app-select
-                            id="js-appointmentDoctor"
+                            :id="'js-appointmentDoctor'"
                             class="select"
                             :name="'doctor'"
                             :placeholder="'Врач'"
@@ -165,8 +165,8 @@
     import TimePicker from '@/components/form/TimePicker.vue'
     import Select from '@/components/form/Select.vue'
     import { mapGetters } from 'vuex'
-    import { mapActions } from 'vuex'
     import { required, email, requiredUnless } from 'vuelidate/lib/validators'
+    import axios from 'axios'
 
 
     export default {
@@ -252,21 +252,30 @@
                 this.touchService = false;
                 this.touchDoctor = false;
             },
-            submit(event) {
-                this.$http.post('/upload.php', this.appointment)
-                    .then(
-                        response => 
-                        {
-                            console.log('post-ok');
-                            console.log(response);
-                            // this.resetForm();
-                        }, 
-                        error => 
-                        {
-                            console.log('post-error');
-                            console.log(error);
-                        });
-                this.resetForm();
+            // submit() {
+            //     console.log('submit');
+            //     console.log(this.appointment);
+            //     axios({
+            //         method: 'post',
+            //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            //         url: '/dist/upload.php',
+            //         data: this.appointment
+            //     })
+            //     .then(function(response) {
+            //         console.log(response);
+            //     })
+            //     .catch(function(error) {
+            //         console.log(error);
+            //     })
+            // }
+            submit() {
+                axios.post('/upload.php', this.appointment)
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                })
             }
         },
         components: {
@@ -278,9 +287,9 @@
 </script>
 
 <style lang="sass">
-    .appointment
-        .container
-            background-color: lightgrey
+    // .appointment
+    //     .container
+    //         background-color: lightgrey
 
     .appointment__title
         margin-top: 35px

@@ -3,19 +3,21 @@
         class="select" 
         :class="{isOpened: showMenu}">
         <li 
+            id="s1"
             @click="toggleMenu()" 
             class="select__toggle" 
             
-            v-show="selectedOption !== undefined && selectedOption !== ''">
+            v-if="selectedOption !== undefined && selectedOption !== ''">
             {{ computedOption }}
             <span class="select__caret"></span>
         </li>
 
         <li 
+            :id="id"
             @click="toggleMenu()" 
             class="select__toggle" 
             
-            v-show="selectedOption === undefined || selectedOption === ''">
+            v-if="selectedOption === undefined || selectedOption === ''">
             {{ placeholder }}
             <span class="select__caret"></span>
         </li>
@@ -56,6 +58,7 @@
             }
         },
         props: {
+            id: [String],
             name: [String],
             options: { 
                 type: [Array, Object] 
@@ -77,9 +80,15 @@
             },
             toggleMenu: function() {
                 this.showMenu = !this.showMenu;
+                this.$emit('toggleSelect', [this.selectorName, this.showMenu]);
             },
             hide(e) {
-                this.showMenu = false;
+                var specialization = document.getElementById('js-appointmentSpecialization');
+                var service = document.getElementById('js-appointmentService');
+                var doctor = document.getElementById('js-appointmentDoctor');
+                if (!specialization.contains(e.target) || !service.contains(e.target) || !doctor.contains(e.target)) {
+                    this.showMenu = false;
+                }
             }
         },
         mixins: [hideMixin]

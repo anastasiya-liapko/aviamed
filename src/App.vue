@@ -77,7 +77,6 @@
         &:focus
             outline: none !important
             box-shadow: none !important
-            border: none
 
     img
         width: 100%
@@ -88,6 +87,9 @@
 
     .btn:focus
         box-shadow: none !important
+
+    [v-cloak] 
+        display: none
 
     .flip-enter-active
         -webkit-animation: flip-in-ver-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
