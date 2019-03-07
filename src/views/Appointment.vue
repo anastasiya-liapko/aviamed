@@ -9,9 +9,10 @@
                     <app-select
                         :id="'js-appointmentSpecialization'"
                         class="select mb-2"
+                        :show="showSpecializations"
                         :name="'specialization'"
                         :placeholder="'Специализация'"
-                        :options="specializations"
+                        :options="selectSpecializations"
                         :selected="appointment.specialization"
                         v-on:updateOption="select">
                     </app-select>
@@ -23,9 +24,10 @@
                         <app-select
                             :id="'js-appointmentService'"
                             class="select"
+                            :show="showServices"
                             :name="'service'"
                             :placeholder="'Услуга'"
-                            :options="services"
+                            :options="selectServices"
                             :selected="appointment.service"
                             v-on:updateOption="select">
                         </app-select>
@@ -39,9 +41,10 @@
                         <app-select
                             :id="'js-appointmentDoctor'"
                             class="select"
+                            :show="showDoctors"
                             :name="'doctor'"
                             :placeholder="'Врач'"
-                            :options="doctors"
+                            :options="selectDoctors"
                             :selected="appointment.doctor"
                             v-on:updateOption="select">
                         </app-select>
@@ -165,6 +168,7 @@
     import TimePicker from '@/components/form/TimePicker.vue'
     import Select from '@/components/form/Select.vue'
     import { mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
     import { required, email, requiredUnless } from 'vuelidate/lib/validators'
     import axios from 'axios'
 
@@ -187,11 +191,14 @@
             }
         },
         computed: {
-            ...mapGetters({
-                'specializations': 'appointmentSpecializations',
-                'services': 'appointmentServices',
-                'doctors': 'appointmentDoctors'
-            })
+            ...mapGetters([
+                'selectSpecializations',
+                'selectServices',
+                'selectDoctors',
+                'showSpecializations',
+                'showServices',
+                'showDoctors'
+            ])
         },
         validations: {
             appointment: {
@@ -220,18 +227,22 @@
             }
         },
         methods: {
+            ...mapActions([
+                'filterSelect'
+            ]),
             select(value) {
                 switch(value[0]) {
                     case 'doctor':
-                        this.appointment.doctor = value[1];
+                        this.appointment.doctor = value[1].name;
                         this.touchDoctor = true;
                         break;
                     case 'service':
-                        this.appointment.service = value[1];
+                        this.appointment.service = value[1].name;
                         this.touchService = true;
                         break;
                     case 'specialization':
-                        this.appointment.specialization = value[1];
+                        this.appointment.specialization = value[1].name;
+                        this.filterSelect({name: 'specialization', id: value[1].id});
                         break;
                 }
             },
@@ -245,6 +256,7 @@
                 var self = this;
                 Object.keys(this.appointment).forEach(function(key,index) {
                     self.appointment[key] = '';
+                    self.appointment['specialization'] = '1';
                     self.appointment['date'] = new Date().toLocaleString().split(',').shift();
                     self.appointment['time'] = new Date().getHours() + 1 + ':00';
                 });
@@ -269,13 +281,25 @@
             //     })
             // }
             submit() {
-                axios.post('/upload.php', this.appointment)
+                // var data = {
+                //     name: this.appointment.name,
+                //     phone: this.appointment.phone,
+                //     email: this.appointment.email,
+                //     specialization: this.appointment.specialization,
+                //     service: this.appointment.service,
+                //     doctor: this.appointment.doctor,
+                //     date: this.appointment.date,
+                //     time: this.appointment.time
+                // }
+                axios.post('/sendFormData.php', this.appointment)
                 .then(function(response) {
                     console.log(response);
+                    // self.resetForm();
                 })
                 .catch(function(error) {
                     console.log(error);
                 })
+                this.resetForm();
             }
         },
         components: {
@@ -287,9 +311,9 @@
 </script>
 
 <style lang="sass">
-    // .appointment
-    //     .container
-    //         background-color: lightgrey
+    .appointment
+        .container
+            background-color: lightgrey
 
     .appointment__title
         margin-top: 35px

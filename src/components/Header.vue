@@ -9,8 +9,6 @@
                     class="header__logo"
                     to="/" 
                     tag="a"
-                    active-class="active"
-                    exact
                     style="border: 1px solid red">
                     <img src="" alt="logo">
                 </router-link>
@@ -22,6 +20,7 @@
                         v-show="showNav">
                         <li 
                             class="nav__item" 
+                            @mouseover=""
                             v-for="(navItem, i) in nav">
                             <router-link 
                                 :to="'/' + navItem.name | link" 
@@ -73,6 +72,11 @@
     import Burger from '@/components/Burger.vue'
 
     export default {
+        data() {
+            return {
+                show: false
+            }
+        },
         computed: {
             ...mapGetters([
                 'nav',
@@ -126,7 +130,6 @@
 
     .header__logo
         width: 150px
-        // background-color: lightblue
 
     .active
         background-color: red
@@ -137,9 +140,6 @@
         &:hover .dropdown
             z-index: 10
             max-height: 300px
-        // &:last-child .dropdown
-        //     left: auto
-        //     right: 0
 
     .dropdown 
         position: absolute
@@ -152,6 +152,7 @@
         overflow: hidden
         border: 1px solid blue
         .dropdown__item
+            max-width: 200px
             text-align: left
 
 

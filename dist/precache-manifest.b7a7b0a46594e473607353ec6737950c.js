@@ -8,12 +8,12 @@ self.__precacheManifest = [
     "url": "/dist/js/about.b3216ab5.js"
   },
   {
-    "revision": "8de0cfe363265e07f8b8",
-    "url": "/dist/css/app.51641e6d.css"
+    "revision": "46cc5ee78ce4cad686dd",
+    "url": "/dist/css/app.dbe4880f.css"
   },
   {
-    "revision": "8de0cfe363265e07f8b8",
-    "url": "/dist/js/app.b0f417a9.js"
+    "revision": "46cc5ee78ce4cad686dd",
+    "url": "/dist/js/app.2f1b4d34.js"
   },
   {
     "revision": "c567d8ab7403e72a7b6e",
@@ -84,12 +84,20 @@ self.__precacheManifest = [
     "url": "/dist/js/chunk-3e7952a7.bba93efd.js"
   },
   {
-    "revision": "9efb3294d62fffa98193",
-    "url": "/dist/css/chunk-ccff3ff2.154b4010.css"
+    "revision": "ba7e86ef5e38ea258e8f",
+    "url": "/dist/css/chunk-5805501a.62dc3000.css"
   },
   {
-    "revision": "9efb3294d62fffa98193",
-    "url": "/dist/js/chunk-ccff3ff2.50f5579b.js"
+    "revision": "ba7e86ef5e38ea258e8f",
+    "url": "/dist/js/chunk-5805501a.eea79e16.js"
+  },
+  {
+    "revision": "000850d01a578a7b1ff1",
+    "url": "/dist/css/chunk-5dc6784a.dc684695.css"
+  },
+  {
+    "revision": "000850d01a578a7b1ff1",
+    "url": "/dist/js/chunk-5dc6784a.377d07ae.js"
   },
   {
     "revision": "0fc28060c35ae2524d35",
@@ -100,32 +108,16 @@ self.__precacheManifest = [
     "url": "/dist/js/chunk-d62a61f8.133f0da2.js"
   },
   {
-    "revision": "e31196831ac309b7263a",
-    "url": "/dist/css/chunk-e6f7835c.fa370683.css"
+    "revision": "f0a7c3c4e57651de5fad",
+    "url": "/dist/css/chunk-vendors.d944809d.css"
   },
   {
-    "revision": "e31196831ac309b7263a",
-    "url": "/dist/js/chunk-e6f7835c.300a4b6b.js"
+    "revision": "f0a7c3c4e57651de5fad",
+    "url": "/dist/js/chunk-vendors.0441c06b.js"
   },
   {
-    "revision": "784e2196c49282f4a6f4",
-    "url": "/dist/css/chunk-vendors.588e93f1.css"
-  },
-  {
-    "revision": "784e2196c49282f4a6f4",
-    "url": "/dist/js/chunk-vendors.8c858a23.js"
-  },
-  {
-    "revision": "b257fa9c5ac8c515ac4d77a667ce2943",
-    "url": "/dist/img/default-skin.b257fa9c.svg"
-  },
-  {
-    "revision": "63cb60052643e8f29f9bf1590ca0ebf1",
+    "revision": "016e64b7e3d2411181edfd970f8abac3",
     "url": "/dist/index.html"
-  },
-  {
-    "revision": "bb2421c5f33bba809b7b466f752faa13",
-    "url": "/dist/ajaxfile.php"
   },
   {
     "revision": "f77f024491a0c05b402560f6c0627fd2",
@@ -140,12 +132,20 @@ self.__precacheManifest = [
     "url": "/dist/sql/queries.sql"
   },
   {
-    "revision": "9ea047656553fb5ef43dc5b9ff1d47ee",
+    "revision": "93991e58b7ae1b6d20d23b585ec2255e",
     "url": "/dist/sql/schema.sql"
   },
   {
-    "revision": "972552d85423c1dd9031a88777978f42",
-    "url": "/dist/upload.php"
+    "revision": "86d8bb8ffbb4ca31cfc365d0ca647cd2",
+    "url": "/dist/functions.php"
+  },
+  {
+    "revision": "b67e21f0b0a15a6e68126f24380e6314",
+    "url": "/dist/sendFormData.php"
+  },
+  {
+    "revision": "bb2421c5f33bba809b7b466f752faa13",
+    "url": "/dist/ajaxfile.php"
   },
   {
     "revision": "65c9176168a2c758944d559d3de8bf7e",

@@ -1,9 +1,9 @@
 <template>
     <div 
         class="select" 
-        :class="{isOpened: showMenu}">
+        :class="{isOpened: computedShow}">
         <li 
-            id="s1"
+            :id="id"
             @click="toggleMenu()" 
             class="select__toggle" 
             
@@ -25,8 +25,8 @@
         <transition name="rotate-hor" appear>
             <ul 
                 class="select__menu"
-                v-show="showMenu" 
-                :class="{opened: showMenu}">
+                v-show="computedShow" 
+                :class="{opened: computedShow}">
                 <li>
                     <a 
                         href="javascript:void(0)" 
@@ -37,8 +37,8 @@
                     <a 
                         href="javascript:void(0)" 
                         @click="updateOption(name, option)" 
-                        :class="{isSelected: option === selectedOption}">
-                        {{ option }}
+                        :class="{isSelected: option.name === selectedOption}">
+                        {{ option.name }}
                     </a>
                 </li>
             </ul>
@@ -48,6 +48,7 @@
 
 <script>
     import { hideMixin } from '@/mixins'
+    import { mapActions } from 'vuex'
 
     export default {
         data() {
@@ -58,6 +59,7 @@
             }
         },
         props: {
+            show: [Boolean],
             id: [String],
             name: [String],
             options: { 
@@ -69,9 +71,16 @@
         computed: {
             computedOption() {
                 return this.selectedOption = this.selected;
+            },
+            computedShow() {
+                return this.showMenu = this.show;
             }
         },
         methods: {
+            ...mapActions([
+                'toggleSelect',
+                'hideSelect'
+            ]),
             updateOption: function(name, option) {
                 this.selectorName = name;
                 this.selectedOption = option;
@@ -79,15 +88,16 @@
                 this.$emit('updateOption', [this.selectorName, this.selectedOption]);
             },
             toggleMenu: function() {
-                this.showMenu = !this.showMenu;
-                this.$emit('toggleSelect', [this.selectorName, this.showMenu]);
+                var value = {
+                    name: this.name,
+                    show: this.computedShow
+                }
+                this.toggleSelect(value);
             },
             hide(e) {
-                var specialization = document.getElementById('js-appointmentSpecialization');
-                var service = document.getElementById('js-appointmentService');
-                var doctor = document.getElementById('js-appointmentDoctor');
-                if (!specialization.contains(e.target) || !service.contains(e.target) || !doctor.contains(e.target)) {
-                    this.showMenu = false;
+                var select = document.getElementById(this.id);
+                if (!select.contains(e.target)) {
+                    this.hideSelect(this.name);
                 }
             }
         },

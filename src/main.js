@@ -15,12 +15,12 @@ import 'animate.css/animate.min.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 //npm install vue-photoswipe
-import VuePhotoSwipe from 'vue-photoswipe'
+// import VuePhotoSwipe from 'vue-photoswipe'
 // npm install v-photoswipe 
 
 Vue.use(Vuelidate)
 Vue.use(VueAwesomeSwiper)
-Vue.use(VuePhotoSwipe)
+// Vue.use(VuePhotoSwipe)
 
 Vue.config.productionTip = false
 

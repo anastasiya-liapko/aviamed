@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/dist/precache-manifest.8ed5645d713f6f676cdb25874df9316a.js"
+  "/dist/precache-manifest.b7a7b0a46594e473607353ec6737950c.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "aviamed"});

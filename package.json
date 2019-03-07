@@ -16,7 +16,6 @@
     "v-photoswipe": "^1.0.3",
     "vue": "^2.6.6",
     "vue-awesome-swiper": "^3.1.3",
-    "vue-photoswipe": "^1.0.3",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1"

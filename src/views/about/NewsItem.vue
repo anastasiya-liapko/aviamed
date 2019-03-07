@@ -11,19 +11,19 @@
             <br>
             <app-modal-slider></app-modal-slider>
             <br>
-            <app-photo-swipe></app-photo-swipe>
+            <!-- <app-photo-swipe></app-photo-swipe> -->
         </div>
     </div>
 </template>
 
 <script>
     import ModalSlider from '@/components/ModalSlider.vue'
-    import PhotoSwipe from '@/components/PhotoSwipe.vue'
+    // import PhotoSwipe from '@/components/PhotoSwipe.vue'
 
     export default {
         components: {
-            'app-modal-slider': ModalSlider,
-            'app-photo-swipe': PhotoSwipe
+            'app-modal-slider': ModalSlider
+            // 'app-photo-swipe': PhotoSwipe
         }
     }
 </script>
