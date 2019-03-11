@@ -21,4 +21,4 @@ CREATE TABLE `users` (
     `doctor` varchar(100) NOT NULL,
     `date` varchar(100) NOT NULL,
     `time` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

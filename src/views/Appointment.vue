@@ -120,10 +120,11 @@
                         class="input phone mb-2 mb-md-0" 
                         :class="{invalid: $v.appointment.phone.$error}" 
                         style="border: 1px solid red">
-                        <input 
+                        <app-masked-input 
                             id="appointmentPhone"
                             class="phone__input w-100" 
                             name="phone"
+                            mask="\+\1 (111) 111-11-11"
                             placeholder="Телефон"
                             @blur="$v.appointment.phone.$touch()"
                             v-model="appointment.phone">
@@ -156,7 +157,10 @@
                     Записаться
                 </button>
 
-                <p>{{ appointment }}</p>
+                <p  class="appointment__message text-center"
+                    v-if="send">
+                    {{ send }}
+                </p>
                 
             </form>
         </div>
@@ -164,12 +168,14 @@
 </template>
 
 <script>
+    import MaskedInput from 'vue-masked-input' 
+    import { hideMixin } from '@/mixins'
     import DatePicker from '@/components/form/DatePicker.vue'
     import TimePicker from '@/components/form/TimePicker.vue'
     import Select from '@/components/form/Select.vue'
     import { mapGetters } from 'vuex'
     import { mapActions } from 'vuex'
-    import { required, email, requiredUnless } from 'vuelidate/lib/validators'
+    import { required, email, requiredUnless, minLength } from 'vuelidate/lib/validators'
     import axios from 'axios'
 
 
@@ -187,7 +193,8 @@
                     email: ''
                 },
                 touchService: false,
-                touchDoctor: false
+                touchDoctor: false,
+                send: ''
             }
         },
         computed: {
@@ -219,6 +226,7 @@
                 },
                 phone: {
                     required: requiredUnless('email')
+                    // minLength: minLength(18)
                 },
                 email: {
                     required: requiredUnless('phone'),
@@ -256,7 +264,6 @@
                 var self = this;
                 Object.keys(this.appointment).forEach(function(key,index) {
                     self.appointment[key] = '';
-                    self.appointment['specialization'] = '1';
                     self.appointment['date'] = new Date().toLocaleString().split(',').shift();
                     self.appointment['time'] = new Date().getHours() + 1 + ':00';
                 });
@@ -264,49 +271,30 @@
                 this.touchService = false;
                 this.touchDoctor = false;
             },
-            // submit() {
-            //     console.log('submit');
-            //     console.log(this.appointment);
-            //     axios({
-            //         method: 'post',
-            //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            //         url: '/dist/upload.php',
-            //         data: this.appointment
-            //     })
-            //     .then(function(response) {
-            //         console.log(response);
-            //     })
-            //     .catch(function(error) {
-            //         console.log(error);
-            //     })
-            // }
             submit() {
-                // var data = {
-                //     name: this.appointment.name,
-                //     phone: this.appointment.phone,
-                //     email: this.appointment.email,
-                //     specialization: this.appointment.specialization,
-                //     service: this.appointment.service,
-                //     doctor: this.appointment.doctor,
-                //     date: this.appointment.date,
-                //     time: this.appointment.time
-                // }
+                var self = this;
                 axios.post('/sendFormData.php', this.appointment)
                 .then(function(response) {
                     console.log(response);
-                    // self.resetForm();
+                    self.send = 'Запись оформлена';
+                    self.resetForm();
                 })
                 .catch(function(error) {
                     console.log(error);
+                    self.send = 'Произошла ошибка';
                 })
-                this.resetForm();
+            },
+            hide(e) {
+                this.send = '';
             }
         },
         components: {
+            'app-masked-input': MaskedInput,
             'app-date': DatePicker,
             'app-time': TimePicker,
             'app-select': Select
-        }
+        },
+        mixins: [hideMixin]
     }
 </script>
 
