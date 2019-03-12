@@ -18,7 +18,8 @@ import 'swiper/dist/css/swiper.css'
 // import VuePhotoSwipe from 'vue-photoswipe'
 // npm install v-photoswipe 
 
-// npm install vue-masked-input
+// npm install awesome-mask
+
 
 Vue.use(Vuelidate)
 Vue.use(VueAwesomeSwiper)

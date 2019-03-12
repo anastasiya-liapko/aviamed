@@ -29,35 +29,50 @@ export default {
         {
             id: 1,
             specialization_id: 1,
-            name: 'Осмотр'
+            name: '1'
         },
         {
             id: 2,
-            specialization_id: 2,
-            name: 'Осмотр'
+            specialization_id: 1,
+            name: '2'
         },
         {
             id: 3,
-            specialization_id: 3,
-            name: 'Осмотр'
+            specialization_id: 2,
+            name: '3'
+        },
+        {
+            id: 4,
+            specialization_id: 2,
+            name: '4'
         },
     ],
     doctors: [ 
         {
             id: 1,
-            specialization_id: 4,
+            // specialization_id: 1,
+            service_id: 1,
             name: 'Фокина Светлана Николаевна'
         },
         {
             id: 2,
-            specialization_id: 5,
+            // specialization_id: 1,
+            service_id: 1,
             name: 'Шабунина Ирина Юрьевна'
         },
         {
             id: 3,
-            specialization_id: 6,
+            // specialization_id: 2,
+            service_id: 2,
             name: 'Ухабина Ирина Юрьевна'
-        }    
+        },
+        {
+            id: 4,
+            // specialization_id: 2,
+            service_id: 3,
+            name: 'Сирота Александр Евгеньевич'
+        },
+
     ]
 };
 

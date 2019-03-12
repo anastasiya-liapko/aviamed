@@ -120,15 +120,15 @@
                         class="input phone mb-2 mb-md-0" 
                         :class="{invalid: $v.appointment.phone.$error}" 
                         style="border: 1px solid red">
-                        <app-masked-input 
+                        <input 
                             id="appointmentPhone"
                             class="phone__input w-100" 
                             name="phone"
-                            mask="\+\1 (111) 111-11-11"
+                            v-mask="'+9 (999) 999-99-99'"
                             placeholder="Телефон"
                             @blur="$v.appointment.phone.$touch()"
                             v-model="appointment.phone">
-                        <p v-if="!$v.appointment.phone.required && $v.appointment.phone.$dirty">Укажите телефон или email</p>
+                        <p v-if="$v.appointment.phone.$error">Укажите телефон или email</p>
                     </div>
                     
 
@@ -161,6 +161,8 @@
                     v-if="send">
                     {{ send }}
                 </p>
+
+                <p>{{ appointment }}</p>
                 
             </form>
         </div>
@@ -168,7 +170,7 @@
 </template>
 
 <script>
-    import MaskedInput from 'vue-masked-input' 
+    import AwesomeMask from 'awesome-mask' 
     import { hideMixin } from '@/mixins'
     import DatePicker from '@/components/form/DatePicker.vue'
     import TimePicker from '@/components/form/TimePicker.vue'
@@ -225,8 +227,8 @@
                     required
                 },
                 phone: {
-                    required: requiredUnless('email')
-                    // minLength: minLength(18)
+                    required: requiredUnless('email'),
+                    minLength: minLength(18)
                 },
                 email: {
                     required: requiredUnless('phone'),
@@ -236,7 +238,8 @@
         },
         methods: {
             ...mapActions([
-                'filterSelect'
+                'filterSelect',
+                'resetSelect'
             ]),
             select(value) {
                 switch(value[0]) {
@@ -245,12 +248,25 @@
                         this.touchDoctor = true;
                         break;
                     case 'service':
+                        console.log('value1 ' + value[1].id);
                         this.appointment.service = value[1].name;
                         this.touchService = true;
+                        if (value[1] === '') {
+                            this.appointment.doctor = '';
+                            this.resetSelect({name: value[0]});
+                        } else {
+                            this.filterSelect({name: value[0], id: value[1].id});
+                        }
                         break;
                     case 'specialization':
                         this.appointment.specialization = value[1].name;
-                        this.filterSelect({name: 'specialization', id: value[1].id});
+                        if (value[1] === '') {
+                            this.appointment.service = '';
+                            this.appointment.doctor = '';
+                            this.resetSelect({name: value[0]});
+                        } else {
+                            this.filterSelect({name: value[0], id: value[1].id});
+                        }
                         break;
                 }
             },
@@ -267,6 +283,7 @@
                     self.appointment['date'] = new Date().toLocaleString().split(',').shift();
                     self.appointment['time'] = new Date().getHours() + 1 + ':00';
                 });
+                this.resetSelect({name: 'specialization'})
                 this.$v.$reset();
                 this.touchService = false;
                 this.touchDoctor = false;
@@ -289,10 +306,12 @@
             }
         },
         components: {
-            'app-masked-input': MaskedInput,
             'app-date': DatePicker,
             'app-time': TimePicker,
             'app-select': Select
+        },
+        directives: {
+            'mask': AwesomeMask
         },
         mixins: [hideMixin]
     }

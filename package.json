@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.0",
+    "awesome-mask": "^1.1.1",
     "axios": "^0.18.0",
     "hamburgers": "^1.1.3",
     "register-service-worker": "^1.5.2",
@@ -16,7 +17,6 @@
     "v-photoswipe": "^1.0.3",
     "vue": "^2.6.6",
     "vue-awesome-swiper": "^3.1.3",
-    "vue-masked-input": "^0.5.2",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1"
